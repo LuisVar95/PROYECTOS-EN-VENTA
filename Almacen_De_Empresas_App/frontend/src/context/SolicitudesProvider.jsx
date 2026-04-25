@@ -22,25 +22,26 @@ const SolicitudesProvider = ({ children }) => {
   /*********** CRUD *********** */
 
   const crearSolicitud = (datos) => {
-    const producto = productos.find(
-      (p) => p.id === Number(datos.productoId)
-    );
+  const producto = productos.find(
+    (p) => p.id === Number(datos.productoId)
+  );
 
-    const nuevaSolicitud = {
-      id: Date.now(),
-      productoId: producto.id,
-      producto: producto.nombre,
-      cantidad: Number(datos.cantidad),
-      solicitante: datos.solicitante || "Usuario",
-      motivo: datos.motivo || "Solicitud de inventario",
-      estado: "PENDIENTE",
-      fecha: new Date().toLocaleDateString("es-MX"),
-    };
-
-    setSolicitudes((prev) => [nuevaSolicitud, ...prev]);
-
-    cerrarModalSolicitud();
+  const nuevaSolicitud = {
+    id: Date.now(),
+    productoId: producto.id,
+    producto: producto.nombre,
+    unidad: producto.unidad, // 👈 NUEVO
+    cantidad: Number(datos.cantidad),
+    solicitante: datos.solicitante || "Usuario",
+    motivo: datos.motivo || "Solicitud de inventario",
+    estado: "PENDIENTE",
+    fecha: new Date().toLocaleDateString("es-MX"),
   };
+
+  setSolicitudes((prev) => [nuevaSolicitud, ...prev]);
+
+  cerrarModalSolicitud();
+};
 
   const aprobarSolicitud = (solicitud) => {
     Swal.fire({

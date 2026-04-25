@@ -1,3 +1,5 @@
+// productosMock.js
+
 const productosMock = [
   {
     id: 1,
@@ -6,6 +8,8 @@ const productosMock = [
     categoria: "Seguridad",
     stock: 120,
     stockMinimo: 40,
+    unidadMedida: "Caja",
+    permiteDecimales: false,
     ubicacion: "A-01",
     actualizado: "12/04/2026",
     activo: true,
@@ -13,10 +17,12 @@ const productosMock = [
   {
     id: 2,
     codigo: "PRD-002",
-    nombre: "Alcohol isopropílico 1L",
+    nombre: "Alcohol isopropílico",
     categoria: "Limpieza",
     stock: 18,
     stockMinimo: 25,
+    unidadMedida: "Litro",
+    permiteDecimales: true,
     ubicacion: "B-03",
     actualizado: "10/04/2026",
     activo: true,
@@ -28,6 +34,8 @@ const productosMock = [
     categoria: "Papelería",
     stock: 0,
     stockMinimo: 15,
+    unidadMedida: "Rollo",
+    permiteDecimales: false,
     ubicacion: "C-02",
     actualizado: "09/04/2026",
     activo: true,
@@ -39,6 +47,8 @@ const productosMock = [
     categoria: "Oficina",
     stock: 9,
     stockMinimo: 10,
+    unidadMedida: "Pieza",
+    permiteDecimales: false,
     ubicacion: "D-01",
     actualizado: "11/04/2026",
     activo: true,
@@ -46,24 +56,15 @@ const productosMock = [
   {
     id: 5,
     codigo: "PRD-005",
-    nombre: "Cubrebocas KN95",
-    categoria: "Seguridad",
-    stock: 240,
-    stockMinimo: 50,
-    ubicacion: "A-03",
+    nombre: "Agua destilada",
+    categoria: "Limpieza",
+    stock: 20,
+    stockMinimo: 5,
+    unidadMedida: "Litro",
+    permiteDecimales: true,
+    ubicacion: "B-02",
     actualizado: "12/04/2026",
     activo: true,
-  },
-  {
-    id: 6,
-    codigo: "PRD-006",
-    nombre: "Etiquetas adhesivas",
-    categoria: "Papelería",
-    stock: 56,
-    stockMinimo: 20,
-    ubicacion: "C-04",
-    actualizado: "08/04/2026",
-    activo: false,
   },
 ];
 

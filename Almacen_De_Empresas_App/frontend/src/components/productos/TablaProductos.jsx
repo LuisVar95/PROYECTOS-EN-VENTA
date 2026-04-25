@@ -1,3 +1,5 @@
+// TablaProductos.jsx
+
 import {
   HiOutlineEye,
   HiOutlinePencilSquare,
@@ -23,6 +25,7 @@ const TablaProductos = ({
           <h2 className="text-xl font-semibold text-slate-800">
             Lista de productos
           </h2>
+
           <p className="text-sm text-slate-500 mt-1">
             Consulta, administra y revisa el inventario actual
           </p>
@@ -37,33 +40,40 @@ const TablaProductos = ({
         </div>
       </div>
 
-      {/* Desktop table */}
+      {/* Desktop */}
       <div className="hidden xl:block overflow-x-auto">
         <table className="w-full min-w-[1100px]">
           <thead className="bg-slate-50/80">
             <tr className="text-left">
-              <th className="px-6 py-4 text-xs font-semibold uppercase tracking-wide text-slate-500">
+              <th className="px-6 py-4 text-xs font-semibold uppercase text-slate-500">
                 Código
               </th>
-              <th className="px-6 py-4 text-xs font-semibold uppercase tracking-wide text-slate-500">
+
+              <th className="px-6 py-4 text-xs font-semibold uppercase text-slate-500">
                 Producto
               </th>
-              <th className="px-6 py-4 text-xs font-semibold uppercase tracking-wide text-slate-500">
+
+              <th className="px-6 py-4 text-xs font-semibold uppercase text-slate-500">
                 Categoría
               </th>
-              <th className="px-6 py-4 text-xs font-semibold uppercase tracking-wide text-slate-500">
+
+              <th className="px-6 py-4 text-xs font-semibold uppercase text-slate-500">
                 Stock actual
               </th>
-              <th className="px-6 py-4 text-xs font-semibold uppercase tracking-wide text-slate-500">
+
+              <th className="px-6 py-4 text-xs font-semibold uppercase text-slate-500">
                 Stock mínimo
               </th>
-              <th className="px-6 py-4 text-xs font-semibold uppercase tracking-wide text-slate-500">
+
+              <th className="px-6 py-4 text-xs font-semibold uppercase text-slate-500">
                 Ubicación
               </th>
-              <th className="px-6 py-4 text-xs font-semibold uppercase tracking-wide text-slate-500">
+
+              <th className="px-6 py-4 text-xs font-semibold uppercase text-slate-500">
                 Estado
               </th>
-              <th className="px-6 py-4 text-xs font-semibold uppercase tracking-wide text-slate-500 text-center">
+
+              <th className="px-6 py-4 text-xs font-semibold uppercase text-slate-500 text-center">
                 Acciones
               </th>
             </tr>
@@ -80,14 +90,13 @@ const TablaProductos = ({
                 </td>
 
                 <td className="px-6 py-5">
-                  <div>
-                    <p className="text-sm font-semibold text-slate-800">
-                      {producto.nombre}
-                    </p>
-                    <p className="text-xs text-slate-500 mt-1">
-                      ID interno: #{producto.id}
-                    </p>
-                  </div>
+                  <p className="text-sm font-semibold text-slate-800">
+                    {producto.nombre}
+                  </p>
+
+                  <p className="text-xs text-slate-500 mt-1">
+                    ID interno #{producto.id}
+                  </p>
                 </td>
 
                 <td className="px-6 py-5 text-sm text-slate-600">
@@ -95,11 +104,11 @@ const TablaProductos = ({
                 </td>
 
                 <td className="px-6 py-5 text-sm font-semibold text-slate-800">
-                  {producto.stock}
+                  {producto.stock} {producto.unidadMedida}
                 </td>
 
                 <td className="px-6 py-5 text-sm text-slate-600">
-                  {producto.stockMinimo}
+                  {producto.stockMinimo} {producto.unidadMedida}
                 </td>
 
                 <td className="px-6 py-5 text-sm text-slate-600">
@@ -113,46 +122,42 @@ const TablaProductos = ({
                     activo={producto.activo}
                   />
                 </td>
+
                 <td className="px-6 py-5">
                   <div className="flex items-center justify-center gap-2">
                     <button
-                      type="button"
                       onClick={() => onVer(producto)}
-                      className="w-9 h-9 rounded-xl bg-slate-100 text-slate-600 hover:bg-slate-200 transition flex items-center justify-center"
+                      className="w-9 h-9 rounded-xl bg-slate-100 hover:bg-slate-200 flex items-center justify-center"
                     >
-                      <HiOutlineEye className="text-lg" />
+                      <HiOutlineEye />
                     </button>
 
                     <button
-                      type="button"
                       onClick={() => onEditar(producto)}
-                      className="w-9 h-9 rounded-xl bg-slate-100 text-slate-600 hover:bg-slate-200 transition flex items-center justify-center"
+                      className="w-9 h-9 rounded-xl bg-slate-100 hover:bg-slate-200 flex items-center justify-center"
                     >
-                      <HiOutlinePencilSquare className="text-lg" />
+                      <HiOutlinePencilSquare />
                     </button>
 
                     <button
-                      type="button"
                       onClick={() => onEntrada(producto)}
-                      className="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-700 hover:bg-emerald-100 transition flex items-center justify-center"
+                      className="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-700 hover:bg-emerald-100 flex items-center justify-center"
                     >
-                      <HiOutlineArrowDownTray className="text-lg" />
+                      <HiOutlineArrowDownTray />
                     </button>
 
                     <button
-                      type="button"
                       onClick={() => onSalida(producto)}
-                      className="w-9 h-9 rounded-xl bg-amber-50 text-amber-700 hover:bg-amber-100 transition flex items-center justify-center"
+                      className="w-9 h-9 rounded-xl bg-amber-50 text-amber-700 hover:bg-amber-100 flex items-center justify-center"
                     >
-                      <HiOutlineArrowUpTray className="text-lg" />
+                      <HiOutlineArrowUpTray />
                     </button>
 
                     <button
-                      type="button"
                       onClick={() => onEliminar(producto)}
-                      className="w-9 h-9 rounded-xl bg-red-50 text-red-600 hover:bg-red-100 transition flex items-center justify-center"
+                      className="w-9 h-9 rounded-xl bg-red-50 text-red-600 hover:bg-red-100 flex items-center justify-center"
                     >
-                      <HiOutlineTrash className="text-lg" />
+                      <HiOutlineTrash />
                     </button>
                   </div>
                 </td>
@@ -162,7 +167,7 @@ const TablaProductos = ({
         </table>
       </div>
 
-      {/* Mobile / Tablet cards */}
+      {/* Mobile */}
       <div className="xl:hidden p-4 space-y-4">
         {productos.map((producto) => (
           <div
@@ -174,9 +179,11 @@ const TablaProductos = ({
                 <p className="text-xs font-semibold text-slate-500">
                   {producto.codigo}
                 </p>
+
                 <h3 className="text-base font-bold text-slate-800 mt-1">
                   {producto.nombre}
                 </h3>
+
                 <p className="text-sm text-slate-500 mt-1">
                   {producto.categoria}
                 </p>
@@ -189,18 +196,18 @@ const TablaProductos = ({
               />
             </div>
 
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-5">
+            <div className="grid grid-cols-2 gap-4 mt-5">
               <div>
                 <p className="text-xs text-slate-500">Stock</p>
                 <p className="text-sm font-semibold text-slate-800 mt-1">
-                  {producto.stock}
+                  {producto.stock} {producto.unidadMedida}
                 </p>
               </div>
 
               <div>
                 <p className="text-xs text-slate-500">Mínimo</p>
                 <p className="text-sm font-semibold text-slate-800 mt-1">
-                  {producto.stockMinimo}
+                  {producto.stockMinimo} {producto.unidadMedida}
                 </p>
               </div>
 
@@ -215,74 +222,45 @@ const TablaProductos = ({
             <div className="flex flex-wrap gap-2 mt-5">
               <button
                 onClick={() => onVer(producto)}
-                className="px-3 h-10 rounded-xl bg-slate-100 text-slate-700 hover:bg-slate-200 transition flex items-center gap-2 text-sm"
+                className="px-3 h-10 rounded-xl bg-slate-100 hover:bg-slate-200 flex items-center gap-2"
               >
-                <HiOutlineEye className="text-lg" />
+                <HiOutlineEye />
                 Ver
               </button>
 
               <button
                 onClick={() => onEditar(producto)}
-                className="w-9 h-9 rounded-xl bg-slate-100 text-slate-600 hover:bg-slate-200 transition flex items-center justify-center"
+                className="w-10 h-10 rounded-xl bg-slate-100 hover:bg-slate-200 flex items-center justify-center"
               >
-                <HiOutlinePencilSquare className="text-lg" />
+                <HiOutlinePencilSquare />
               </button>
 
               <button
-                type="button"
                 onClick={() => onEntrada(producto)}
-                className="px-3 h-10 rounded-xl bg-emerald-50 text-emerald-700 hover:bg-emerald-100 transition flex items-center gap-2 text-sm"
+                className="px-3 h-10 rounded-xl bg-emerald-50 text-emerald-700 hover:bg-emerald-100 flex items-center gap-2"
               >
-                <HiOutlineArrowDownTray className="text-lg" />
+                <HiOutlineArrowDownTray />
                 Entrada
               </button>
 
               <button
                 onClick={() => onSalida(producto)}
-                className="px-3 h-10 rounded-xl bg-amber-50 text-amber-700 hover:bg-amber-100 transition flex items-center gap-2 text-sm"
+                className="px-3 h-10 rounded-xl bg-amber-50 text-amber-700 hover:bg-amber-100 flex items-center gap-2"
               >
-                <HiOutlineArrowUpTray className="text-lg" />
+                <HiOutlineArrowUpTray />
                 Salida
               </button>
 
               <button
-                type="button"
                 onClick={() => onEliminar(producto)}
-                className="px-3 h-10 rounded-xl bg-red-50 text-red-600 hover:bg-red-100 transition flex items-center gap-2 text-sm"
+                className="px-3 h-10 rounded-xl bg-red-50 text-red-600 hover:bg-red-100 flex items-center gap-2"
               >
-                <HiOutlineTrash className="text-lg" />
+                <HiOutlineTrash />
                 Baja
               </button>
             </div>
           </div>
         ))}
-      </div>
-
-      {/* Footer tabla */}
-      <div className="px-6 py-4 border-t border-slate-100 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-        <p className="text-sm text-slate-500">
-          Mostrando{" "}
-          <span className="font-semibold text-slate-700">
-            1-{productos.length}
-          </span>{" "}
-          de{" "}
-          <span className="font-semibold text-slate-700">
-            {productos.length}
-          </span>{" "}
-          productos
-        </p>
-
-        <div className="flex items-center gap-2">
-          <button className="px-4 h-10 rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-50 transition">
-            Anterior
-          </button>
-          <button className="px-4 h-10 rounded-xl bg-slate-800 text-white hover:bg-slate-700 transition">
-            1
-          </button>
-          <button className="px-4 h-10 rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-50 transition">
-            Siguiente
-          </button>
-        </div>
       </div>
     </div>
   );

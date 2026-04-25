@@ -65,7 +65,9 @@ const TablaSolicitudes = ({ solicitudes, tipo }) => {
                   <p className="text-xs text-slate-500 mt-1">ID: #{s.id}</p>
                 </td>
 
-                <td className="px-6 py-5 font-semibold">{s.cantidad}</td>
+                <td className="px-6 py-5 font-semibold">
+  {s.cantidad} {s.unidad}
+</td>
 
                 <td className="px-6 py-5 text-slate-600">{s.solicitante}</td>
 
@@ -137,8 +139,8 @@ const TablaSolicitudes = ({ solicitudes, tipo }) => {
               <div>
                 <p className="text-xs text-slate-500">Cantidad</p>
                 <p className="text-sm font-semibold text-slate-800 mt-1">
-                  {s.cantidad}
-                </p>
+  {s.cantidad} {s.unidad}
+</p>
               </div>
 
               <div>
