@@ -13,6 +13,7 @@ import Usuario from "./models/Usuario.js";
 import ConfiguracionSeguridad from "./models/ConfiguracionSeguridad.js";
 import EspacioTrabajo from "./models/EspacioTrabajo.js";
 import Licencia from "./models/Licencia.js";
+import ActividadAgenda from "./models/ActividadAgenda.js";
 import PasswordReset from "./models/PasswordReset.js";
 import cuentaRoutes from "./routes/cuentaRoutes.js";
 import dispositivoRoutes from "./routes/dispositivoRoutes.js";
@@ -21,6 +22,7 @@ import authRoutes from "./routes/authRoutes.js";
 import espacioTrabajoRoutes from "./routes/espacioTrabajoRoutes.js";
 import usuarioRoutes from "./routes/usuarioRoutes.js";
 import licenciaRoutes from "./routes/licenciaRoutes.js";
+import agendaRoutes from "./routes/agendaRoutes.js";
 import { proteger } from "./middleware/authMiddleware.js";
 
 dotenv.config();
@@ -68,6 +70,17 @@ Usuario.hasMany(EspacioTrabajo, {
 });
 
 EspacioTrabajo.belongsTo(Usuario, {
+  as: "usuario",
+  foreignKey: "usuarioId",
+});
+
+Usuario.hasMany(ActividadAgenda, {
+  as: "actividadesAgenda",
+  foreignKey: "usuarioId",
+  onDelete: "CASCADE",
+});
+
+ActividadAgenda.belongsTo(Usuario, {
   as: "usuario",
   foreignKey: "usuarioId",
 });
@@ -174,6 +187,7 @@ app.use("/api/credenciales", proteger, credencialesRoutes);
 app.use("/api/trabajo", proteger, espacioTrabajoRoutes);
 app.use("/api/usuarios", proteger, usuarioRoutes);
 app.use("/api/licencias", proteger, licenciaRoutes);
+app.use("/api/agenda", proteger, agendaRoutes);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
