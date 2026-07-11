@@ -14,6 +14,8 @@ import ConfiguracionSeguridad from "./models/ConfiguracionSeguridad.js";
 import EspacioTrabajo from "./models/EspacioTrabajo.js";
 import Licencia from "./models/Licencia.js";
 import ActividadAgenda from "./models/ActividadAgenda.js";
+import RedIp from "./models/RedIp.js";
+import DireccionIp from "./models/DireccionIp.js";
 import PasswordReset from "./models/PasswordReset.js";
 import cuentaRoutes from "./routes/cuentaRoutes.js";
 import dispositivoRoutes from "./routes/dispositivoRoutes.js";
@@ -23,6 +25,7 @@ import espacioTrabajoRoutes from "./routes/espacioTrabajoRoutes.js";
 import usuarioRoutes from "./routes/usuarioRoutes.js";
 import licenciaRoutes from "./routes/licenciaRoutes.js";
 import agendaRoutes from "./routes/agendaRoutes.js";
+import mapaIpRoutes from "./routes/mapaIpRoutes.js";
 import { proteger } from "./middleware/authMiddleware.js";
 
 dotenv.config();
@@ -85,6 +88,17 @@ ActividadAgenda.belongsTo(Usuario, {
   foreignKey: "usuarioId",
 });
 
+RedIp.hasMany(DireccionIp, {
+  as: "ips",
+  foreignKey: "redIpId",
+  onDelete: "CASCADE",
+});
+
+DireccionIp.belongsTo(RedIp, {
+  as: "red",
+  foreignKey: "redIpId",
+});
+
 Usuario.hasMany(PasswordReset, {
   as: "recuperacionesPassword",
   foreignKey: "usuarioId",
@@ -135,6 +149,8 @@ const conectarDB = async () => {
     await db.authenticate();
     console.log("Conexion correcta a la base de datos");
 
+    await prepararEsquemaMapaIp();
+
     const syncAlter = process.env.DB_SYNC_ALTER === "true";
     await db.sync(syncAlter ? { alter: true } : undefined);
     console.log("Tablas sincronizadas correctamente");
@@ -143,6 +159,32 @@ const conectarDB = async () => {
   } catch (error) {
     console.error("Error en la base de datos:", error);
     process.exit(1);
+  }
+};
+
+const prepararEsquemaMapaIp = async () => {
+  const queryInterface = db.getQueryInterface();
+
+  try {
+    const tabla = await queryInterface.describeTable("redes_ip");
+
+    if (tabla.redBase && !tabla.ipMadre) {
+      await queryInterface.renameColumn("redes_ip", "redBase", "ipMadre");
+    }
+
+    const columnasObsoletas = ["nombre", "cidr", "gateway", "vlan", "area"];
+
+    for (const columna of columnasObsoletas) {
+      const tablaActual = await queryInterface.describeTable("redes_ip");
+
+      if (tablaActual[columna]) {
+        await queryInterface.removeColumn("redes_ip", columna);
+      }
+    }
+  } catch (error) {
+    if (error?.original?.code !== "ER_NO_SUCH_TABLE") {
+      throw error;
+    }
   }
 };
 
@@ -188,6 +230,7 @@ app.use("/api/trabajo", proteger, espacioTrabajoRoutes);
 app.use("/api/usuarios", proteger, usuarioRoutes);
 app.use("/api/licencias", proteger, licenciaRoutes);
 app.use("/api/agenda", proteger, agendaRoutes);
+app.use("/api/mapa-ip", proteger, mapaIpRoutes);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
